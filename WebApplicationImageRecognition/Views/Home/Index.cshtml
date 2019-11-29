@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row" id="divSingleCard">
+    <div class="col-md-12">
+        @using (Html.BeginForm("UploadPhotoOfSingleCard", "Home", FormMethod.Post, new { id = "form", enctype = "multipart/form-data" }))
+        {
+            <label for="imageUpload" class="btn btn-primary btn-block btn-outlined">Take photo of a single card</label>
+            <input type="file" id="imageUpload" name="file" accept="image/*" capture="camera" style="display: none">
+        }
+    </div>
+</div>
+
+<h1 class="text-center" id="pleaseWait" style="display:none">Please wait...</h1>
+
+
+
+@if (ViewBag.number != null)
+{
+    {
+        if (ViewBag.number)
+        {
+            <div id="danishText">
+                <hr />
+
+                <div></div>
+                @foreach (var result in ViewBag.number)
+                {
+                    <h3 class="text-center">@result</h3>
+                }
+            </div>
+        }
+        else
+        {
+            <h3 class="text-center">No match was found.</h3>
+        }
+
+
+    }
+}
+
+@if (ViewBag.ElapsedMs != null)
+{
+    <div id="divElapsedMs" style="display:block">
+        <hr />
+        <div class="text-center">@ViewBag.ElapsedMs milliseconds used by Machine Learning</div>
+    </div>
+}
+
+@section Scripts
+{
+    <script>
+        document.getElementById("imageUpload").onchange = function () {
+            document.getElementById("pleaseWait").style.display = "block"
+            var danishTextElement = document.getElementById("danishText");
+            if (danishTextElement) {
+                danishTextElement.style.display = "none"
+            }
+            var divElapsedMsElement = document.getElementById("divElapsedMs");
+            if (divElapsedMsElement) {
+                divElapsedMsElement.style.display = "none"
+            }
+            document.getElementById("form").submit();
+        };
+    </script>
+}
