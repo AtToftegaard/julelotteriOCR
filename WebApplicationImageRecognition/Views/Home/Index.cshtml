@@ -16,19 +16,17 @@
 
 
 
-@if (ViewBag.number != null)
+@if (ViewBag.numbers != null)
 {
     {
-        if (ViewBag.number)
+        if (ViewBag.numbers != null)
         {
             <div id="danishText">
-                <hr />
-
-                <div></div>
-                @foreach (var result in ViewBag.number)
-                {
-                    <h3 class="text-center">@result</h3>
-                }
+                <ul>
+                    @foreach (var data in ViewBag.numbers) {
+                        <li>@data</li>
+                    }
+                </ul>
             </div>
         }
         else

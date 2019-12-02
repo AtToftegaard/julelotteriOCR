@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
+using WebApplicationImageRecognition.Models;
 
 namespace WebApplicationImageRecognition.Models
 {
@@ -33,4 +35,16 @@ namespace WebApplicationImageRecognition.Models
     }
 
 
+}
+
+public static class Extensions
+{
+    public static List<string> GetLotteryNumbers(this Recognitionresult recResult) {
+        Regex rx = new Regex("Nr. [0-9]{4}");
+        List<String> list = new List<string>();
+        foreach (Line line in recResult.lines) {
+            if (rx.IsMatch(line.text)) { list.Add(rx.Match(line.text).Value); }
+        }
+        return list;
+    }
 }

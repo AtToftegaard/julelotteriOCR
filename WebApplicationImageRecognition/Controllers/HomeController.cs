@@ -43,11 +43,12 @@ namespace WebApplicationImageRecognition.Controllers
             using (var content = new ByteArrayContent(fileContents)) {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 response = await client.PostAsync(uri, content);
-                Recognitionresult number = null;
+                List<string> numbers = null;
                 if (response.Headers.TryGetValues("Operation-Location", out operationLocation)) {
-                    number = await GetTextResult(operationLocation.FirstOrDefault());
+                    var recognitionResult = await GetTextResult(operationLocation.FirstOrDefault());
+                    numbers = recognitionResult.GetLotteryNumbers();
                 }
-                ViewBag.Number = number;
+                ViewBag.numbers = numbers;
             }
 
             watch.Stop();
